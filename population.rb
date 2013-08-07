@@ -1,11 +1,12 @@
 class Population
     attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num
+    
     def initialize
-        # Generate initial randomized population
     end
 
     def fitness_function (dna)
-        return -2*dna[0]**2 + -2*dna[1]**2 -4
+        #return -2*dna[0]**2 + -2*dna[1]**2 -4
+        return Math.sin(dna[0]) + Math.cos(dna[1])
     end
 
     def create
@@ -17,19 +18,22 @@ class Population
     end
 
     def train
+        average_fitness = 0
         @candidates.each { |c|
             c.fitness = fitness_function(c.dna)
+            average_fitness = average_fitness + c.fitness
         }
-
+        average_fitness = average_fitness/@population_size
+        print "average_fitness: " << average_fitness.to_s << "\n"
         @candidates = @candidates.sort_by {|c| c.fitness}
         @candidates = @candidates.reverse
     end
 
     def crossover
-        @candidates = @candidates.take(50)
+        @candidates = @candidates.take((@population_size*0.75).to_i)
         
         new_generation = Array.new
-        (0...100).each {|i|
+        (0...@population_size).each {|i|
             couple = @candidates.sample(2)
             child = Candidate.new
             child.dna = [(couple[0].dna[0] + couple[1].dna[0])/2.0, (couple[0].dna[1] + couple[1].dna[1])/2.0] # Initialize the dna of the child with the parents' dna.
