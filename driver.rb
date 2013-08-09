@@ -1,3 +1,5 @@
+
+
 require_relative 'candidate'
 require_relative 'population'
 
@@ -26,11 +28,11 @@ population.fitness_function = FITNESS_FUNCTION
 population.create
 
 (0...MAX_GENERATIONS).each do |i|
-    print "Generation " << i.to_s << ": "
+  print "Generation " << i.to_s << ": "
 
-    population.train
-    population.crossover
-    if i != MAX_GENERATIONS - 1
-        population.mutate
-    end
+  population.train
+  population.crossover
+  if i != MAX_GENERATIONS - 1
+    population.mutate
+  end
 end

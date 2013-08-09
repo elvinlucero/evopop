@@ -1,3 +1,3 @@
 class Candidate
-    attr_accessor :dna, :fitness
+  attr_accessor :dna, :fitness
 end
