@@ -1,18 +1,17 @@
 class Population
-    attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num
+    attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len
     
     def initialize
     end
 
-    def fitness_function (dna)
-        #return -2*dna[0]**2 + -2*dna[1]**2 -4
-        return Math.sin(dna[0]) + Math.cos(dna[1])
-    end
 
     def create
         @candidates = Array.new(@population_size) {|c| 
             candidate = Candidate.new
-            candidate.dna = [Random.rand(@initial_range_min...@initial_range_max), Random.rand(@initial_range_min...@initial_range_max)]
+            candidate.dna = []
+            (0...@dna_len).each {
+                candidate.dna << Random.rand(@initial_range_min...@initial_range_max)
+            }
             candidate
         }
     end
@@ -20,7 +19,7 @@ class Population
     def train
         average_fitness = 0
         @candidates.each { |c|
-            c.fitness = fitness_function(c.dna)
+            c.fitness = fitness_function.call(c.dna)
             average_fitness = average_fitness + c.fitness
         }
         average_fitness = average_fitness/@population_size

@@ -1,4 +1,3 @@
 class Candidate
-    attr_accessor :dna, :fitness, :fitness_function
-
+    attr_accessor :dna, :fitness
 end
