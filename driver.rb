@@ -1,20 +1,20 @@
-
-
 require_relative 'candidate'
 require_relative 'population'
 
-POPULATION_SIZE = 10000
+# Define parameters and the fitness function.
+POPULATION_SIZE = 1000
 DNA_LEN = 2
-MAX_GENERATIONS = 100
+MAX_GENERATIONS = 10000
 INITIAL_RANGE_MIN = -10000.0
 INITIAL_RANGE_MAX = 10000.0
 MUTATION_RANGE_MIN = -100.0
 MUTATION_RANGE_MAX = 100.0
-MUTATION_NUM = 20
+MUTATION_NUM = 10
 FITNESS_FUNCTION = Proc.new { |dna|
     Math.sin(dna[0]) + Math.cos(dna[1])
 }
 
+# Initialize the population to be trained.
 population = Population.new
 population.population_size = POPULATION_SIZE
 population.dna_len = DNA_LEN
@@ -27,12 +27,28 @@ population.mutation_num = MUTATION_NUM
 population.fitness_function = FITNESS_FUNCTION
 population.create
 
-(0...MAX_GENERATIONS).each do |i|
-  print "Generation " << i.to_s << ": "
 
-  population.train
-  population.crossover
-  if i != MAX_GENERATIONS - 1
-    population.mutate
-  end
+# Primary driver, trains over a number of generations and performs crossover
+# and mutation 
+
+# Public: Train a population over a number of generations
+#
+# population - The population to be trained. Initializ first.
+#
+#
+# Returns a trained population over a number of generations.
+def drive(population)
+    (0...MAX_GENERATIONS).each do |i|
+      print "Generation " << i.to_s << ": "
+
+      population.train
+      population.crossover
+      if i != MAX_GENERATIONS - 1
+        population.mutate
+      end
+    end
+
+    population
 end
+
+drive population
