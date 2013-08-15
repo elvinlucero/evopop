@@ -1,10 +1,23 @@
+
+# Public: Represents the population that is being trained. Has various methods
+# relevant to training.
+# 
+#
+# Examples
+#   population = Population.new
+#   ... initialize population with parameters ...
+#   population.train
+#   population.crossover
+#   population.mutate
 class Population
+
   attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len
   
   def initialize
   end
 
-
+  # Public: Creates a new population class. Should be called after all the
+  # parameters have been set to the attributes.
   def create
     @candidates = Array.new(@population_size) {|c| 
         candidate = Candidate.new
@@ -16,6 +29,8 @@ class Population
     }
   end
 
+  # Public: Determines the fitness of the population and thereafter sorts it
+  # based on fitness descdending (high fitness first, low fitness last).
   def train
     average_fitness = 0
     @candidates.each { |c|
@@ -28,6 +43,10 @@ class Population
     @candidates = @candidates.reverse
   end
 
+  # Public: Performs simple mechanism of crossover - in this case picks two
+  # random candidates in from a top percentile of the population and averages
+  # out their DNA per dimension, producing new offspring equal to the
+  # population size attribute.
   def crossover
     @candidates = @candidates.take((@population_size*0.75).to_i)
     
@@ -42,6 +61,9 @@ class Population
     @candidates = new_generation
   end
 
+  # Public: Performs simple mutation over the next generation. In this case, 
+  # it either adds or substracts an amount to each dimension given the 
+  # mutation range attributes.
   def mutate
     mutated = @candidates.sample(MUTATION_NUM)
 
