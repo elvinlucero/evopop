@@ -3,4 +3,8 @@
 # fitness function.
 class Candidate
   attr_accessor :dna, :fitness
+
+  def initialize
+    @dna = []
+  end
 end

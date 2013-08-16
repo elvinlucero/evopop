@@ -7,8 +7,8 @@ DNA_LEN = 2
 MAX_GENERATIONS = 10000
 INITIAL_RANGE_MIN = -10000.0
 INITIAL_RANGE_MAX = 10000.0
-MUTATION_RANGE_MIN = -100.0
-MUTATION_RANGE_MAX = 100.0
+MUTATION_RANGE_MIN = -10.0
+MUTATION_RANGE_MAX = 10.0
 MUTATION_NUM = 10
 FITNESS_FUNCTION = Proc.new { |dna|
     Math.sin(dna[0]) + Math.cos(dna[1])
@@ -26,7 +26,6 @@ population.mutation_range_max = MUTATION_RANGE_MAX
 population.mutation_num = MUTATION_NUM
 population.fitness_function = FITNESS_FUNCTION
 population.create
-
 
 # Primary driver, trains over a number of generations and performs crossover
 # and mutation 
