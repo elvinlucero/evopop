@@ -38,8 +38,6 @@ population.create
 # Returns a trained population over a number of generations.
 def drive(population)
     (0...MAX_GENERATIONS).each do |i|
-      print "Generation " << i.to_s << ": "
-
       population.train
       population.crossover
       if i != MAX_GENERATIONS - 1
@@ -51,3 +49,5 @@ def drive(population)
 end
 
 drive population
+
+print population.average_fitness

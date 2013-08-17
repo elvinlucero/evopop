@@ -10,14 +10,17 @@
 #   population.crossover
 #   population.mutate
 class Population
-  attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len
+  attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len, :average_fitness
+
+  def initialize
+    @average_fitness = []
+  end
 
   # Public: Creates a new population class. Should be called after all the
   # parameters have been set to the attributes.
   def create
     @candidates = Array.new(@population_size) {|c| 
         candidate = Candidate.new
-        candidate.dna = []
         (0...@dna_len).each {
             candidate.dna << Random.rand(@initial_range_min...@initial_range_max)
         }
@@ -34,7 +37,9 @@ class Population
       average_fitness = average_fitness + c.fitness
     }
     average_fitness = average_fitness/@population_size
-    print "average_fitness: " << average_fitness.to_s << "\n"
+
+    @average_fitness << average_fitness
+
     @candidates = @candidates.sort_by {|c| c.fitness}
     @candidates = @candidates.reverse
   end
