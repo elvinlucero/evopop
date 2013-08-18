@@ -27,6 +27,8 @@ population.mutation_num = MUTATION_NUM
 population.fitness_function = FITNESS_FUNCTION
 population.create
 
+population = Population.new
+
 # Primary driver, trains over a number of generations and performs crossover
 # and mutation 
 

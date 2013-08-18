@@ -12,8 +12,23 @@
 class Population
   attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len, :average_fitness
 
+  # Initializes the attributes with default values.
   def initialize
     @average_fitness = []
+    @population_size = 100
+    @max_generations = 100
+    @initial_range_min = -100
+    @initial_range_max = 100
+    @mutation_range_min = -10
+    @mutation_range_max = 10
+    @mutation_num = 0.10*@population_size
+    @dna_len = 1
+
+    @fitness_function = Proc.new { |dna|
+      Math.sin(dna[0])
+    }
+
+    self.create
   end
 
   # Public: Creates a new population class. Should be called after all the
