@@ -12,7 +12,8 @@
 class Population
   attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len, :average_fitness
 
-  # Initializes the attributes with default values.
+  # Initializes the attributes with default values. This is not guaranteed
+  # to reach maxima.
   def initialize
     @average_fitness = []
     @population_size = 100
@@ -35,11 +36,11 @@ class Population
   # parameters have been set to the attributes.
   def create
     @candidates = Array.new(@population_size) {|c| 
-        candidate = Candidate.new
-        (0...@dna_len).each {
-            candidate.dna << Random.rand(@initial_range_min...@initial_range_max)
-        }
-        candidate
+      candidate = Candidate.new
+      (0...@dna_len).each {
+        candidate.dna << Random.rand(@initial_range_min...@initial_range_max)
+      }
+      candidate
     }
   end
 

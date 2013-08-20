@@ -11,7 +11,7 @@ MUTATION_RANGE_MIN = -10.0
 MUTATION_RANGE_MAX = 10.0
 MUTATION_NUM = 10
 FITNESS_FUNCTION = Proc.new { |dna|
-    Math.sin(dna[0]) + Math.cos(dna[1])
+  Math.sin(dna[0]) + Math.cos(dna[1])
 }
 
 # Initialize the population to be trained.
@@ -37,15 +37,15 @@ population.create
 #
 # Returns a trained population over a number of generations.
 def drive(population)
-    (0...MAX_GENERATIONS).each do |i|
-      population.train
-      population.crossover
-      if i != MAX_GENERATIONS - 1
-        population.mutate
-      end
+  (0...MAX_GENERATIONS).each do |i|
+    population.train
+    population.crossover
+    if i != MAX_GENERATIONS - 1
+      population.mutate
     end
+  end
 
-    population
+  population
 end
 
 drive population
