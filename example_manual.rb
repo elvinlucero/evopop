@@ -37,10 +37,10 @@ population.create
 #
 # Returns a trained population over a number of generations.
 def drive(population)
-  (0...MAX_GENERATIONS).each do |i|
+  (0...population.max_generations).each do |i|
     population.train
     population.crossover
-    if i != MAX_GENERATIONS - 1
+    if i != population.max_generations - 1
       population.mutate
     end
   end

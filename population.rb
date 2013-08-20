@@ -22,7 +22,7 @@ class Population
     @initial_range_max = 100
     @mutation_range_min = -10
     @mutation_range_max = 10
-    @mutation_num = 0.10*@population_size
+    @mutation_num = (0.10*@population_size).to_i
     @dna_len = 1
 
     @fitness_function = Proc.new { |dna|
@@ -84,7 +84,7 @@ class Population
   # it either adds or substracts an amount to each dimension given the 
   # mutation range attributes.
   def mutate
-    mutated = @candidates.sample(MUTATION_NUM)
+    mutated = @candidates.sample(self.mutation_num)
 
     mutated.each { |c|
       (0...@dna_len).each {|i|
