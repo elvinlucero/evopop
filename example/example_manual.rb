@@ -1,5 +1,4 @@
-require_relative 'candidate'
-require_relative 'population'
+require 'evopop'
 
 # Define parameters and the fitness function.
 POPULATION_SIZE = 1000

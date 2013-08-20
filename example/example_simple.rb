@@ -1,5 +1,4 @@
-require_relative 'candidate'
-require_relative 'population'
+require 'evopop'
 
 def drive(population)
   (0...population.max_generations).each do |i|
