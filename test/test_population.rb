@@ -13,7 +13,7 @@ class PopulationTest < Test::Unit::TestCase
     population.initial_range_max = 10000.0
     population.mutation_range_min = -100.0
     population.mutation_range_max = 100.0
-    population.mutation_num = 100
+    population.mutation_num = 10
     population.fitness_function = Proc.new { |dna|
       Math.sin(dna[0]) + Math.cos(dna[1])
     }
@@ -42,17 +42,33 @@ class PopulationTest < Test::Unit::TestCase
     # Train the population based on default fitness function
     population.train
 
-    # Candidates should have been sorted in order
-    sorted_candidates = (population.candidates.sort_by {|c| c.fitness}).reverse
-
-    assert_equal(sorted_candidates, population.candidates)
-    population.candidates.each { |c|
-      assert_equal(c.fitness.nil?, false)
+    population.candidates.length.times { |count|
+      assert_equal(population.candidates[count].fitness.nil?, false)
+      
+      if count > 0
+        assert_equal(true, population.candidates[count].fitness <= population.candidates[count-1].fitness)
+      end
     }
   end
 
   def test_mutation
     population = initialize_population
+
+    old_candidates = Marshal.load(Marshal.dump(population.candidates))
+
+    # Train the population based on default fitness function
+    population.mutate
+
+    counter = 0
+
+    old_candidates.zip(population.candidates).each {|old_candidate, new_candidate|
+      if old_candidate.dna.to_s != new_candidate.dna.to_s
+        assert_equal(true, (old_candidate.dna[0] - new_candidate.dna[0]).abs <= population.mutation_range_max)
+        counter = counter + 1
+      end
+    }
+
+    assert_equal(population.mutation_num, counter)
 
   end
 
