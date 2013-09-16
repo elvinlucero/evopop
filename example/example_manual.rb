@@ -50,5 +50,5 @@ end
 drive population
 
 # Sort and print out candidate with highest fitness in the last generation.
-candidates = population.candidates.sort_by {|c| c.fitness}
-print candidates[0].dna
+population.train
+puts "Finished #{MAX_GENERATIONS} generations with the fittest candidate with a dna of #{population.candidates[0].dna} and a fitness of #{population.candidates[0].fitness}."

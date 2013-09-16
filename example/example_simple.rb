@@ -16,4 +16,6 @@ population = Population.new
 
 drive population
 
-print population.average_fitness
+# Sort and print out candidate with highest fitness in the last generation.
+population.train
+puts "Finished with the fittest candidate with a dna of #{population.candidates[0].dna} and a fitness of #{population.candidates[0].fitness}."
