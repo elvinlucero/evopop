@@ -6,7 +6,7 @@ class PopulationTest < Test::Unit::TestCase
 
   def initialize_population
     population = Population.new
-    population.population_size = 1000
+    population.population_size = 100
     population.dna_len = 2
     population.max_generations = 10000
     population.initial_range_min = -10000.0
@@ -36,9 +36,24 @@ class PopulationTest < Test::Unit::TestCase
     }
   end
 
+  def test_train
+    population = initialize_population
+
+    # Train the population based on default fitness function
+    population.train
+
+    # Candidates should have been sorted in order
+    sorted_candidates = (population.candidates.sort_by {|c| c.fitness}).reverse
+
+    assert_equal(sorted_candidates, population.candidates)
+    population.candidates.each { |c|
+      assert_equal(c.fitness.nil?, false)
+    }
+  end
+
   def test_mutation
     population = initialize_population
-  
+
   end
 
   def test_cross_over
