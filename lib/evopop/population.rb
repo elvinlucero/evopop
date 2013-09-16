@@ -1,5 +1,5 @@
 
-# Public: Represents the population that is being trained. Has various methods
+# Represents the population that is being trained. Has various methods
 # relevant to training.
 # 
 #
@@ -32,7 +32,7 @@ class Population
     self.create
   end
 
-  # Public: Creates a new population class. Should be called after all the
+  # Creates a new population class. Should be called after all the
   # parameters have been set to the attributes.
   def create
     @candidates = Array.new(@population_size) {|c| 
@@ -44,7 +44,7 @@ class Population
     }
   end
 
-  # Public: Determines the fitness of the population and thereafter sorts it
+  # Determines the fitness of the population and thereafter sorts it
   # based on fitness descdending (high fitness first, low fitness last).
   def train
     average_fitness = 0
@@ -60,7 +60,7 @@ class Population
     @candidates = @candidates.reverse
   end
 
-  # Public: Performs simple mechanism of crossover - in this case picks two
+  # Performs simple mechanism of crossover - in this case picks two
   # random candidates in from a top percentile of the population and averages
   # out their DNA per dimension, producing new offspring equal to the
   # population size attribute.
@@ -80,7 +80,7 @@ class Population
     @candidates = new_generation
   end
 
-  # Public: Performs simple mutation over the next generation. In this case, 
+  # Performs simple mutation over the next generation. In this case, 
   # it either adds or substracts an amount to each dimension given the 
   # mutation range attributes.
   def mutate

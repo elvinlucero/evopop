@@ -2,7 +2,9 @@ require 'test/unit'
 require 'evopop'
 
 class PopulationTest < Test::Unit::TestCase
-  def test_initialize
+  attr_accessor :population
+
+  def initialize_population
     population = Population.new
     population.population_size = 1000
     population.dna_len = 2
@@ -16,14 +18,32 @@ class PopulationTest < Test::Unit::TestCase
       Math.sin(dna[0]) + Math.cos(dna[1])
     }
     population.create
+    population
+  end
+
+  # Simple test to assure functions in the Population file are properly
+  # initializing the population parameters.
+  def test_initialize_population 
+    population = initialize_population
 
     assert_equal(population.candidates.length, population.population_size)
+    assert_equal(true, population.fitness_function.is_a?(Proc))
 
     population.candidates.each { |c|
       assert_equal(c.dna.length, population.dna_len)
       assert_equal(true, c.dna[0] > population.initial_range_min)
       assert_equal(true, c.dna[1] < population.initial_range_max)
     }
+  end
+
+  def test_mutation
+    population = initialize_population
+  
+  end
+
+  def test_cross_over
+    population = initialize_population
 
   end
+  
 end

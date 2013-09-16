@@ -4,6 +4,7 @@
 class Candidate
   attr_accessor :dna, :fitness
 
+  # Simple initialization of candidate object.
   def initialize
     @dna = []
   end
