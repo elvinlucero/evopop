@@ -49,4 +49,5 @@ end
 
 drive population
 
-print population.average_fitness
+candidates = population.candidates.sort_by {|c| c.fitness}
+print candidates[0].dna
