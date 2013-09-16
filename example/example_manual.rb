@@ -49,5 +49,6 @@ end
 
 drive population
 
+# Sort and print out candidate with highest fitness in the last generation.
 candidates = population.candidates.sort_by {|c| c.fitness}
 print candidates[0].dna
