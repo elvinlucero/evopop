@@ -38,6 +38,10 @@ class PopulationTest < Test::Unit::TestCase
     }
   end
 
+  # Simple test of the training function. Ensure that when training
+  # finishes the fitness of the ith element of the population is 
+  # less than or equal to the i-1th element of the population. I.e.
+  # fitness is becoming greater over the iteration of the popoulation.
   def test_train
     # Arrange: Initialize the population
     population = initialize_population
@@ -55,6 +59,8 @@ class PopulationTest < Test::Unit::TestCase
     }
   end
 
+  # Simple test to ensure that only the exact number of candidates in the
+  # population are mutated.
   def test_mutation
     # Arrange: Initialize the population
     population = initialize_population
@@ -76,10 +82,20 @@ class PopulationTest < Test::Unit::TestCase
     assert_equal(population.mutation_num, counter)
   end
 
-  def test_cross_over
+  def test_crossover
     # Arrange: Initialize the population
-    population = initialize_population
+    population = Population.new
+    
+    # Act: Train and corssover the population a number of times
+    50.times {
+      population.train
+      population.crossover
+    }
 
+    # Assert: The initial average fitness is less than what occurs after 100 generations.
+    # This is to ensure that over generations the average fitness does indeed go up, given
+    # no mutation.
+    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
   end
   
 end
