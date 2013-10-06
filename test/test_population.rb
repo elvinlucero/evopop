@@ -82,9 +82,11 @@ class PopulationTest < Test::Unit::TestCase
     assert_equal(population.mutation_num, counter)
   end
 
+  # Simple
   def test_crossover
     # Arrange: Initialize the population
     population = Population.new
+    population.mutation_num = 0
     
     # Act: Train and corssover the population a number of times
     50.times {
