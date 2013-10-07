@@ -88,7 +88,7 @@ class PopulationTest < Test::Unit::TestCase
     population = initialize_population
     
     # Act: Train and corssover the population a number of times
-    10.times {
+    5.times {
       population.train
       population.crossover
     }
@@ -96,6 +96,7 @@ class PopulationTest < Test::Unit::TestCase
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given
     # no mutation.
+    puts population.average_fitness
     assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
   end
   
