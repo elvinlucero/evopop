@@ -4,22 +4,28 @@ module Crossover
 
   # Perform 1 point crossover for a pair of candidates at the ordinal.
   # 
-  def crossover (candidates, ordinal)
-    # Compose the first child from the first chunk of the first candidate
-    # and the second chunk of the second candidate
+  def self.one_crossover(candidates, ordinal)
+    # Compose the dna of the first child from the first chunk of the 
+    # first candidate and the second chunk of the second candidate
     dna0_left = candidates[0].dna.take(ordinal)
     dna1_right = candidates[1].dna.drop(ordinal)
-    candidate1 = Candidate.new 
-    candidate1.dna = dna0_left + dna_1_right
+
     
-    # Compose the second child from the first chunk of the second candidate
-    # and the second chunk of the first candidate
+    # Compose the dna of the second child from the first chunk of the 
+    # first candidate and the second chunk of the second candidate
     dna1_left = candidates[1].dna.take(ordinal)
     dna0_right = candidates[0].dna.drop(ordinal)
-    candidate2 = Candidate.new
-    candidate2.dna = dna1_left + dna_0_right
 
-    return [candidate1, candidate2]
+    children = [Candidate.new, Candidate.new]
+    children[0].dna = dna0_left + dna1_right
+    children[1].dna = dna1_left + dna0_right
+
+    puts (dna0_left + dna1_right).to_s
+    children = [Candidate.new(:dna => dna0_left + dna1_right), 
+                Candidate.new(:dna => dna1_left + dna0_right)]
+
+
+    return children
   end
 
 
@@ -27,7 +33,7 @@ module Crossover
   # 
   # Example:
   # n_point
-  def n_point (candidates, ordinals)
+  def n_point(candidates, ordinals)
 
   end
 

@@ -1,5 +1,6 @@
 require 'evopop/population'
 require 'evopop/candidate'
+require 'evopop/crossover'
 
 class Evopop
 

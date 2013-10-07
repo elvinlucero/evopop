@@ -61,22 +61,27 @@ class Population
   end
 
   # Performs simple mechanism of crossover - in this case picks two
-  # random candidates in from a top percentile of the population and averages
-  # out their DNA per dimension, producing new offspring equal to the
+  # random candidates in from a top percentile of the population and 
+  # performs one point crossover, producing new offspring equal to the
   # population size attribute.
   def crossover
     @candidates = @candidates.take((@population_size*0.75).to_i)
     
     new_generation = Array.new
+    
     (0...@population_size).each {|i|
+      # For each of the top 75% of the population take 2
       couple = @candidates.sample(2)
-      child = Candidate.new
-      (0...@dna_len).each {|j|
-        child.dna << (couple[0].dna[j] + couple[1].dna[j])/2.0 # Initialize the dna of the child with the average of the parents' dna.
-      } 
-      new_generation << child 
-    }
 
+      children = Crossover.one_crossover(couple, self.dna_len/2)
+
+      new_generation = new_generation + children
+      
+      if new_generation.length >= self.population_size
+        new_generation = new_generation.take(self.population_size)
+        break
+      end
+    }
     @candidates = new_generation
   end
 
