@@ -10,7 +10,7 @@
 #   population.crossover
 #   population.mutate
 class Population
-  attr_accessor :candidates, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len, :average_fitness
+  attr_accessor :candidates, :population_size, :max_generations, :crossover_function, :crossover_params, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len, :average_fitness
 
   # Initializes the attributes with default values. This is not guaranteed
   # to reach maxima.
@@ -24,7 +24,9 @@ class Population
     @mutation_range_max = 10
     @mutation_num = (0.10*@population_size).to_i
     @dna_len = 1
+    @crossover_params = {:ordinal => (@dna_len/2)}
 
+    @crossover_function = Crossover.method(:one_point)
     @fitness_function = Proc.new { |dna|
       Math.sin(dna[0])
     }
@@ -65,6 +67,7 @@ class Population
   # performs one point crossover, producing new offspring equal to the
   # population size attribute.
   def crossover
+    # Define the candidates that can have children.
     @candidates = @candidates.take((@population_size*0.75).to_i)
     
     new_generation = Array.new
@@ -72,11 +75,14 @@ class Population
     (0...@population_size).each {|i|
       # For each of the top 75% of the population take 2
       couple = @candidates.sample(2)
+      params = @crossover_params
 
-      children = Crossover.one_crossover(couple, self.dna_len/2)
+      children = @crossover_function.call(couple, params)
 
       new_generation = new_generation + children
       
+      # When we go above set population_size, take the first population_size
+      # candidates, ignore the rest.
       if new_generation.length >= self.population_size
         new_generation = new_generation.take(self.population_size)
         break
