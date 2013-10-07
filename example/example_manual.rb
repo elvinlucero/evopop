@@ -9,9 +9,12 @@ INITIAL_RANGE_MAX = 10000.0
 MUTATION_RANGE_MIN = -10.0
 MUTATION_RANGE_MAX = 10.0
 MUTATION_NUM = 10
+CROSSOVER_PARAMS = {:ordinal => (DNA_LEN/2)}
+CROSSOVER_FUNCTION = Crossover.method(:one_point)
 FITNESS_FUNCTION = Proc.new { |dna|
   Math.sin(dna[0]) + Math.cos(dna[1])
 }
+
 
 # Initialize the population to be trained.
 population = Population.new
@@ -23,6 +26,8 @@ population.initial_range_max = INITIAL_RANGE_MAX
 population.mutation_range_min = MUTATION_RANGE_MIN
 population.mutation_range_max = MUTATION_RANGE_MAX
 population.mutation_num = MUTATION_NUM
+population.crossover_params = CROSSOVER_PARAMS
+population.crossover_function = CROSSOVER_FUNCTION
 population.fitness_function = FITNESS_FUNCTION
 population.create
 

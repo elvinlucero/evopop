@@ -10,14 +10,16 @@ require 'evopop'
 
 # Initialize the population to be trained.
 population = Population.new
-population.population_size = 1000
+population.population_size = 100
 population.dna_len = 2
 population.max_generations = 10000
 population.initial_range_min = -10000.0
 population.initial_range_max = 10000.0
 population.mutation_range_min = -100.0
 population.mutation_range_max = 100.0
-population.mutation_num = 100
+population.mutation_num = 10
+population.crossover_params = {:ordinal => (population.dna_len/2)}
+population.crossover_function = Crossover.method(:one_point)
 population.fitness_function = Proc.new { |dna|
   Math.sin(dna[0]) + Math.cos(dna[1])
 }
