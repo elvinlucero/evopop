@@ -16,14 +16,9 @@ module Crossover
     dna1_left = candidates[1].dna.take(ordinal)
     dna0_right = candidates[0].dna.drop(ordinal)
 
-    children = [Candidate.new, Candidate.new]
-    children[0].dna = dna0_left + dna1_right
-    children[1].dna = dna1_left + dna0_right
-
-    puts (dna0_left + dna1_right).to_s
-    children = [Candidate.new(:dna => dna0_left + dna1_right), 
-                Candidate.new(:dna => dna1_left + dna0_right)]
-
+    # Initialize and assign DNA to children.
+    children = [Candidate.new(dna = dna0_left + dna1_right), 
+                Candidate.new(dna = dna1_left + dna0_right)]
 
     return children
   end

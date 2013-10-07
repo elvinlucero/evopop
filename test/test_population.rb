@@ -89,7 +89,6 @@ class PopulationTest < Test::Unit::TestCase
     
     # Act: Train and corssover the population a number of times
     10.times {
-      puts population.candidates.length
       population.train
       population.crossover
     }
