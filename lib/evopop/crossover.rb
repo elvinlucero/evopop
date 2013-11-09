@@ -24,6 +24,24 @@ module Crossover
     return children
   end
 
+  # Perorm two point crossover over a pair of candidates. Will output two 
+  # children with genes spliced over the crossover points.
+
+  def self.two_point(candidates, params)
+    # Ordinals should be stored in params as a comma separated list. I.e. "1,2". Make sure to sort.
+    ordinals = params[:ordinals].split(",").sort.collect {|i| i.to_i }
+
+    cdna0 = candidates[0].dna
+    cdna1 = candidates[1].dna
+
+    # Initialize and assign the DNA of the children.
+    children = [Candidate.new(cdna0[0..ordinals[0]] + cdna1[(ordinals[0] + 1)..ordinals[1]] + cdna0[(ordinals[1] + 1)..cdna0.length-1]),
+                Candidate.new(cdna1[0..ordinals[0]] + cdna0[(ordinals[0] + 1)..ordinals[1]] + cdna1[(ordinals[1] + 1)..cdna1.length-1])]
+    
+    return children
+
+  end
+
   # Perform n_point crossover for a pair of candidates. Will output two children from the n_point crossover.
   # 
   # Example:

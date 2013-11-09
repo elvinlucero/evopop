@@ -101,6 +101,31 @@ class PopulationTest < Test::Unit::TestCase
     assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
   end
   
+  def test_two_point_crossover
+    population = Population.new
+    population.population_size = 100
+    population.dna_len = 8
+    population.max_generations = 10000
+    population.initial_range_min = -10000.0
+    population.initial_range_max = 10000.0
+    population.mutation_range_min = -100.0
+    population.mutation_range_max = 100.0
+    population.mutation_num = 10
+    population.crossover_params = {:ordinals => "2,4"}
+    population.crossover_function = Crossover.method(:two_point)
+    population.fitness_function = Proc.new { |dna|
+      Math.sin(dna[0]) + Math.cos(dna[1])
+    }
+    population.create
+
+    100.times {
+      population.train
+      population.crossover
+    }
+
+    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
+  end
+
   def test_average_crossover
     # Arrange: Initialize the population
     population = initialize_population
