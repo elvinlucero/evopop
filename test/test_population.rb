@@ -4,7 +4,7 @@ require 'evopop'
 class PopulationTest < Test::Unit::TestCase
   attr_accessor :population
 
-  def initialize_population
+  def initialize_population(returns = true)
     population = Population.new
     population.population_size = 100
     population.dna_len = 2
@@ -20,7 +20,10 @@ class PopulationTest < Test::Unit::TestCase
       Math.sin(dna[0]) + Math.cos(dna[1])
     }
     population.create
-    population
+    
+    if returns
+      population
+    end
   end
 
   # Simple test to assure functions in the Population file are properly
@@ -102,28 +105,23 @@ class PopulationTest < Test::Unit::TestCase
   end
   
   def test_two_point_crossover
-    population = Population.new
-    population.population_size = 100
+    # Arrange: Initialize the population with parameters for the crossover function
+    population = initialize_population(true)
     population.dna_len = 8
-    population.max_generations = 10000
-    population.initial_range_min = -10000.0
-    population.initial_range_max = 10000.0
-    population.mutation_range_min = -100.0
-    population.mutation_range_max = 100.0
-    population.mutation_num = 10
     population.crossover_params = {:ordinals => "2,4"}
     population.crossover_function = Crossover.method(:two_point)
-    population.fitness_function = Proc.new { |dna|
-      Math.sin(dna[0]) + Math.cos(dna[1])
-    }
     population.create
 
+    # Act: Train and crossover the population a number of times.
     100.times {
       population.train
       population.crossover
     }
 
-    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
+    # Assert: The initial average fitness is less than what occurs after 100 generations.
+    # This is to ensure that over generations the average fitness does indeed go up, given
+    # no mutation.
+    assert_equal(true, population.average_fitness[0] > population.average_fitness[population.average_fitness.length-1])
   end
 
   def test_average_crossover
@@ -131,7 +129,7 @@ class PopulationTest < Test::Unit::TestCase
     population = initialize_population
     population.crossover_function = Crossover.method(:average)
 
-    # Act: Train and corssover the population a number of times
+    # Act: Train and crossover the population a number of times
     100.times {
       population.train
       population.crossover
