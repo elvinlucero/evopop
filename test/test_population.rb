@@ -8,7 +8,7 @@ class PopulationTest < Test::Unit::TestCase
     population = Population.new
     population.population_size = 100
     population.dna_len = 2
-    population.max_generations = 10000
+    population.max_generations = 1000
     population.initial_range_min = -10000.0
     population.initial_range_max = 10000.0
     population.mutation_range_min = -100.0
@@ -121,7 +121,30 @@ class PopulationTest < Test::Unit::TestCase
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given
     # no mutation.
-    assert_equal(true, population.average_fitness[0] > population.average_fitness[population.average_fitness.length-1])
+    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
+  end
+
+  def test_n_point_crossover
+    # Arrange: Initialize the population with parameters for the crossover function
+    population = initialize_population(true)
+    population.dna_len = 5
+    population.crossover_params = {:ordinals => "0,2,3"}
+    population.crossover_function = Crossover.method(:n_point)
+
+    population.create
+    population.population_size = 4
+    population.candidates = [Candidate.new([0,1,2,3,5]),Candidate.new([4,2,3,8,7]),Candidate.new([4,5,6,9,0]),Candidate.new([6,5,7,2,8])]
+
+    # Act: Train and crossover the population a number of times.
+    100.times {
+      population.train
+      population.crossover
+    }
+
+    # Assert: The initial average fitness is less than what occurs after 100 generations.
+    # This is to ensure that over generations the average fitness does indeed go up, given
+    # no mutation.
+    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
   end
 
   def test_average_crossover

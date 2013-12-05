@@ -47,7 +47,42 @@ module Crossover
   # Example:
   # n_point
   def self.n_point(candidates, params)
+    ordinals = params[:ordinals].split(",").sort.collect {|i| i.to_i }
 
+    pdna0 = candidates[0].dna
+    pdna1 = candidates[1].dna
+    
+    dna_length = candidates[0].dna.length
+    
+    cdna0 = []
+    cdna1 = []
+    
+    old_ordinal = 0
+    synchronous = ordinals[0] == 0 ? false : true
+
+    ordinals.each {|i|
+      if synchronous
+        cdna0 = cdna0 + pdna0[old_ordinal..i]
+        cdna1 = cdna1 + pdna1[old_ordinal..i]
+      else 
+        cdna0 = cdna0 + pdna1[old_ordinal..i]
+        cdna1 = cdna1 + pdna0[old_ordinal..i]
+      end
+
+      synchronous = !synchronous
+      old_ordinal = i+1
+      if ordinals.last == old_ordinal-1
+        if synchronous
+          cdna0 = cdna0 + pdna0[old_ordinal..dna_length-1]
+          cdna1 = cdna1 + pdna1[old_ordinal..dna_length-1]
+        else 
+          cdna0 = cdna0 + pdna1[old_ordinal..dna_length-1]
+          cdna1 = cdna1 + pdna0[old_ordinal..dna_length-1]
+        end
+      end
+    }
+    
+    return [Candidate.new(cdna0), Candidate.new(cdna1)]
   end
 
   def self.average(candidates, params)
