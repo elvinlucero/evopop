@@ -4,9 +4,7 @@ def drive(population)
   (0...population.max_generations).each do |i|
     population.train
     population.crossover
-    if i != population.max_generations - 1
-      population.mutate
-    end
+    population.mutate if i != population.max_generations - 1
   end
 
   population

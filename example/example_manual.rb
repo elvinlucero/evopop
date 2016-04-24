@@ -3,17 +3,17 @@ require 'evopop'
 # Define parameters and the fitness function.
 POPULATION_SIZE = 1000
 DNA_LEN = 2
-MAX_GENERATIONS = 10000
-INITIAL_RANGE_MIN = -10000.0
-INITIAL_RANGE_MAX = 10000.0
+MAX_GENERATIONS = 10_000
+INITIAL_RANGE_MIN = -10_000.0
+INITIAL_RANGE_MAX = 10_000.0
 MUTATION_RANGE_MIN = -10.0
 MUTATION_RANGE_MAX = 10.0
 MUTATION_NUM = 10
-CROSSOVER_PARAMS = {:ordinal => (DNA_LEN/2)}
+CROSSOVER_PARAMS = { ordinal: (DNA_LEN / 2) }.freeze
 CROSSOVER_FUNCTION = Crossover.method(:one_point)
-FITNESS_FUNCTION = Proc.new { |dna|
+FITNESS_FUNCTION = proc do |dna|
   Math.sin(dna[0]) + Math.cos(dna[1])
-}
+end
 
 
 # Initialize the population to be trained.
@@ -32,7 +32,7 @@ population.fitness_function = FITNESS_FUNCTION
 population.create
 
 # Primary driver, trains over a number of generations and performs crossover
-# and mutation 
+# and mutation
 
 # Public: Train a population over a number of generations
 #
@@ -44,9 +44,7 @@ def drive(population)
   (0...population.max_generations).each do |i|
     population.train
     population.crossover
-    if i != population.max_generations - 1
-      population.mutate
-    end
+    population.mutate if i != population.max_generations - 1
   end
 
   population
