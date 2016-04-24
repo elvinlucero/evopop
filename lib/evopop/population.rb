@@ -15,24 +15,13 @@ module Evopop
     # Initializes the attributes with default values. This is not guaranteed
     # to reach maxima.
     def initialize
-      @average_fitness = []
-      @population_size = 100
-      @max_generations = 100
-      @initial_range_min = -100
-      @initial_range_max = 100
-      @mutation_range_min = -10
-      @mutation_range_max = 10
-      @mutation_num = (0.10 * @population_size).to_i
-      @dna_len = 1
-      @crossover_params = { ordinal: (@dna_len / 2) }
-
-      @crossover_function = Evopop::Crossover.method(:one_point)
-      @fitness_function = proc do |dna|
-        Math.sin(dna[0])
+      Evopop.config.instance_variables.each do |iv|
+        instance_variable_set(
+          iv,
+          Evopop.config.instance_variable_get(iv)
+        )
       end
-
       create
-
       self
     end
 

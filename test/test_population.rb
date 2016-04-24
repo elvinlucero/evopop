@@ -6,22 +6,22 @@ class Evopop::PopulationTest < Test::Unit::TestCase
   attr_accessor :population
 
   def initialize_population(returns = true)
-    population = Evopop::Population.new
-    population.population_size = 100
-    population.dna_len = 2
-    population.max_generations = 1000
-    population.initial_range_min = -10_000.0
-    population.initial_range_max = 10_000.0
-    population.mutation_range_min = -100.0
-    population.mutation_range_max = 100.0
-    population.mutation_num = 10
-    population.crossover_params = { ordinal: (population.dna_len / 2) }
-    population.crossover_function = Evopop::Crossover.method(:one_point)
-    population.fitness_function = proc { |dna|
+    Evopop.config.population_size = 100
+    Evopop.config.dna_len = 2
+    Evopop.config.max_generations = 1000
+    Evopop.config.initial_range_min = -10_000.0
+    Evopop.config.initial_range_max = 10_000.0
+    Evopop.config.mutation_range_min = -100.0
+    Evopop.config.mutation_range_max = 100.0
+    Evopop.config.mutation_num = 10
+    Evopop.config.crossover_params = { ordinal: (Evopop.config.dna_len / 2) }
+    Evopop.config.crossover_function = Evopop::Crossover.method(:one_point)
+    Evopop.config.fitness_function = proc { |dna|
       Math.sin(dna[0]) + Math.cos(dna[1])
     }
-    population.create
 
+    population = Evopop::Population.new
+    population.create
     population if returns
   end
 
