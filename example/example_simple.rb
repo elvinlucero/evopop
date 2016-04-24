@@ -10,7 +10,7 @@ def drive(population)
   population
 end
 
-population = Population.new
+population = Evopop::Population.new
 
 drive population
 

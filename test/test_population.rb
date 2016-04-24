@@ -2,11 +2,11 @@ require 'test/unit'
 require 'evopop'
 
 # Tests the population class with various operations.
-class PopulationTest < Test::Unit::TestCase
+class Evopop::PopulationTest < Test::Unit::TestCase
   attr_accessor :population
 
   def initialize_population(returns = true)
-    population = Population.new
+    population = Evopop::Population.new
     population.population_size = 100
     population.dna_len = 2
     population.max_generations = 1000
@@ -16,7 +16,7 @@ class PopulationTest < Test::Unit::TestCase
     population.mutation_range_max = 100.0
     population.mutation_num = 10
     population.crossover_params = { ordinal: (population.dna_len / 2) }
-    population.crossover_function = Crossover.method(:one_point)
+    population.crossover_function = Evopop::Crossover.method(:one_point)
     population.fitness_function = proc { |dna|
       Math.sin(dna[0]) + Math.cos(dna[1])
     }
@@ -25,7 +25,7 @@ class PopulationTest < Test::Unit::TestCase
     population if returns
   end
 
-  # Simple test to assure functions in the Population file are properly
+  # Simple test to assure functions in the Evopop::Population file are properly
   # initializing the population parameters.
   def test_initialize_population
     # Arrange and Act: Initialize the population
@@ -107,7 +107,7 @@ class PopulationTest < Test::Unit::TestCase
     population = initialize_population(true)
     population.dna_len = 8
     population.crossover_params = { ordinals: '2,4' }
-    population.crossover_function = Crossover.method(:two_point)
+    population.crossover_function = Evopop::Crossover.method(:two_point)
     population.create
 
     # Act: Train and crossover the population a number of times.
@@ -127,15 +127,15 @@ class PopulationTest < Test::Unit::TestCase
     population = initialize_population(true)
     population.dna_len = 5
     population.crossover_params = { ordinals: '0,2,3' }
-    population.crossover_function = Crossover.method(:n_point)
+    population.crossover_function = Evopop::Crossover.method(:n_point)
 
     population.create
     population.population_size = 4
     population.candidates = [
-      Candidate.new([0, 1, 2, 3, 5]),
-      Candidate.new([4, 2, 3, 8, 7]),
-      Candidate.new([4, 5, 6, 9, 0]),
-      Candidate.new([6, 5, 7, 2, 8])
+      Evopop::Candidate.new([0, 1, 2, 3, 5]),
+      Evopop::Candidate.new([4, 2, 3, 8, 7]),
+      Evopop::Candidate.new([4, 5, 6, 9, 0]),
+      Evopop::Candidate.new([6, 5, 7, 2, 8])
     ]
 
     # Act: Train and crossover the population a number of times.
@@ -153,7 +153,7 @@ class PopulationTest < Test::Unit::TestCase
   def test_average_crossover
     # Arrange: Initialize the population
     population = initialize_population
-    population.crossover_function = Crossover.method(:average)
+    population.crossover_function = Evopop::Crossover.method(:average)
 
     # Act: Train and crossover the population a number of times
     100.times do
