@@ -3,8 +3,7 @@ require 'evopop/candidate'
 require 'evopop/crossover'
 
 class Evopop
-
-  def self.Population 
+  def self.Population
     Population
   end
 
