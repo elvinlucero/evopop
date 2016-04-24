@@ -5,7 +5,7 @@ require 'evopop'
 class Evopop::PopulationTest < Test::Unit::TestCase
   attr_accessor :population
 
-  def initialize_population(returns = true)
+  def initialize_population
     Evopop.config.population_size = 100
     Evopop.config.dna_len = 2
     Evopop.config.max_generations = 1000
@@ -22,7 +22,7 @@ class Evopop::PopulationTest < Test::Unit::TestCase
 
     population = Evopop::Population.new
     population.create
-    population if returns
+    population
   end
 
   # Simple test to assure functions in the Evopop::Population file are properly
@@ -104,7 +104,7 @@ class Evopop::PopulationTest < Test::Unit::TestCase
 
   def test_two_point_crossover
     # Arrange: Initialize the population with parameters for the crossover function
-    population = initialize_population(true)
+    population = initialize_population
     population.dna_len = 8
     population.crossover_params = { ordinals: '2,4' }
     population.crossover_function = Evopop::Crossover.method(:two_point)
@@ -124,13 +124,12 @@ class Evopop::PopulationTest < Test::Unit::TestCase
 
   def test_n_point_crossover
     # Arrange: Initialize the population with parameters for the crossover function
-    population = initialize_population(true)
+    population = initialize_population
     population.dna_len = 5
     population.crossover_params = { ordinals: '0,2,3' }
     population.crossover_function = Evopop::Crossover.method(:n_point)
-
+    population.population_size = 100
     population.create
-    population.population_size = 4
     population.candidates = [
       Evopop::Candidate.new([0, 1, 2, 3, 5]),
       Evopop::Candidate.new([4, 2, 3, 8, 7]),
