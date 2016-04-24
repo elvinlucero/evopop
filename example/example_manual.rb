@@ -15,7 +15,6 @@ FITNESS_FUNCTION = proc do |dna|
   Math.sin(dna[0]) + Math.cos(dna[1])
 end
 
-
 # Initialize the population to be trained.
 population = Population.new
 population.population_size = POPULATION_SIZE

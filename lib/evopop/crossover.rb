@@ -1,7 +1,6 @@
 # Represents a collection of well known crossover functions.
 #
 module Crossover
-
   # Perform 1 point crossover for a pair of candidates at the ordinal.
   # http://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#One-point_crossover
   def self.one_point(candidates, params)
@@ -36,8 +35,10 @@ module Crossover
     cdna0 = candidates[0].dna
     cdna1 = candidates[1].dna
 
-    children = [Candidate.new(cdna0[0..ordinals[0]] + cdna1[(ordinals[0] + 1)..ordinals[1]] + cdna0[(ordinals[1] + 1)..cdna0.length-1]),
-                Candidate.new(cdna1[0..ordinals[0]] + cdna0[(ordinals[0] + 1)..ordinals[1]] + cdna1[(ordinals[1] + 1)..cdna1.length-1])]
+    children = [
+      Candidate.new(cdna0[0..ordinals[0]] + cdna1[(ordinals[0] + 1)..ordinals[1]] + cdna0[(ordinals[1] + 1)..cdna0.length - 1]),
+      Candidate.new(cdna1[0..ordinals[0]] + cdna0[(ordinals[0] + 1)..ordinals[1]] + cdna1[(ordinals[1] + 1)..cdna1.length - 1])
+    ]
 
     children
   end

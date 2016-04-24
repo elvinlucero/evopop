@@ -1,6 +1,7 @@
 require 'test/unit'
 require 'evopop'
 
+# Tests the population class with various operations.
 class PopulationTest < Test::Unit::TestCase
   attr_accessor :population
 
@@ -57,7 +58,7 @@ class PopulationTest < Test::Unit::TestCase
       assert_equal(population.candidates[count].fitness.nil?, false)
 
       if count > 0
-        assert_equal(true, population.candidates[count].fitness <= population.candidates[count-1].fitness)
+        assert_equal(true, population.candidates[count].fitness <= population.candidates[count - 1].fitness)
       end
     end
   end
@@ -78,7 +79,7 @@ class PopulationTest < Test::Unit::TestCase
       next if old_candidate.dna.to_s == new_candidate.dna.to_s
       assert_equal(true, (old_candidate.dna[0] - new_candidate.dna[0]).abs <= population.mutation_range_max)
       assert_equal(true, (old_candidate.dna[1] - new_candidate.dna[1]).abs <= population.mutation_range_max)
-      counter = counter + 1
+      counter += 1
     end
 
     assert_equal(population.mutation_num, counter)
@@ -98,7 +99,7 @@ class PopulationTest < Test::Unit::TestCase
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given
     # no mutation.
-    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
+    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length - 1])
   end
 
   def test_two_point_crossover
@@ -118,7 +119,7 @@ class PopulationTest < Test::Unit::TestCase
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given
     # no mutation.
-    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length-1])
+    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length - 1])
   end
 
   def test_n_point_crossover
@@ -155,10 +156,10 @@ class PopulationTest < Test::Unit::TestCase
     population.crossover_function = Crossover.method(:average)
 
     # Act: Train and crossover the population a number of times
-    100.times {
+    100.times do
       population.train
       population.crossover
-    }
+    end
 
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given

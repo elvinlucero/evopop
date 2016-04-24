@@ -24,7 +24,7 @@ class Population
     @mutation_range_max = 10
     @mutation_num = (0.10 * @population_size).to_i
     @dna_len = 1
-    @crossover_params = { ordinal: (@dna_len/2) }
+    @crossover_params = { ordinal: (@dna_len / 2) }
 
     @crossover_function = Crossover.method(:one_point)
     @fitness_function = proc do |dna|
