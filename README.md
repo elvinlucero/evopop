@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/elvinlucero/evopop.svg?branch=master)](https://travis-ci.org/elvinlucero/evopop)
+
 Evopop
 ------------------------
 
