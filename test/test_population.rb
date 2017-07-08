@@ -59,7 +59,7 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     population.candidates.length.times do |count|
       assert_equal(population.candidates[count].fitness.nil?, false)
 
-      if count.positive?
+      if count > 0
         assert_equal(true, population.candidates[count].fitness <= population.candidates[count - 1].fitness)
       end
     end

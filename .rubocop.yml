@@ -30,6 +30,10 @@ Style/NumericPredicate:
     - 'spec/**/*'
     - 'lib/evopop/crossover.rb'
 
+# For the sake of backwards compatibility to 2.2 and below
+Style/NumericPredicate:
+  Enabled: false
+
 Style/PercentLiteralDelimiters:
   Exclude:
     - 'evopop.gemspec'
