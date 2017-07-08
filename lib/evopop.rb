@@ -3,6 +3,7 @@
 require 'evopop/population'
 require 'evopop/candidate'
 require 'evopop/crossover'
+require 'evopop/dna'
 
 # Toplevel class for evopop project
 module Evopop

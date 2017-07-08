@@ -30,14 +30,12 @@ module Evopop
       self
     end
 
-    # Creates a new population class. Should be called after all the
+    # Creates a new set of population. Should be called after all the
     # parameters have been set to the attributes.
     def create
       @candidates = Array.new(@population_size) do
-        candidate = Evopop::Candidate.new
-        (0...@dna_len).each do
-          candidate.dna << Random.rand(@initial_range_min...@initial_range_max)
-        end
+        dna = Evopop::Dna.new(@initial_range_min, @initial_range_max, @dna_len)
+        candidate = Evopop::Candidate.new(dna)
         candidate
       end
     end
@@ -64,22 +62,13 @@ module Evopop
     # performs one point crossover, producing new offspring equal to the
     # population size attribute.
     def crossover
-      # Define the candidates that can have children.
-      @candidates = @candidates.take((@population_size * 0.75).to_i)
-
       new_generation = []
 
+      # For all the top candidates, take the top 2 and crossover
       (0...@population_size).each do
-        # For each of the top 75% of the population take 2
-        couple = @candidates.sample(2)
-        params = @crossover_params
-
-        children = @crossover_function.call(couple, params)
-
+        children = @crossover_function.call(top_candidates.sample(2), @crossover_params)
         new_generation += children
 
-        # When we go above set population_size, take the first population_size
-        # candidates, ignore the rest.
         if new_generation.length >= population_size
           new_generation = new_generation.take(population_size)
           break
@@ -93,13 +82,21 @@ module Evopop
     # it either adds or substracts an amount to each dimension given the
     # mutation range attributes.
     def mutate
-      mutated = @candidates.sample(mutation_num)
-
-      mutated.each do |c|
-        (0...@dna_len).each do |i|
-          c.dna[i] += Random.rand(@mutation_range_min...@mutation_range_max)
+      mutated_candidates.each do |c|
+        c.dna.dna_len_range.each do |i|
+          c.dna.mutate(i)
         end
       end
+    end
+
+    private
+
+    def top_candidates
+      @candidates.take((@population_size * 0.75).to_i)
+    end
+
+    def mutated_candidates
+      @candidates.sample(mutation_num)
     end
   end
 end

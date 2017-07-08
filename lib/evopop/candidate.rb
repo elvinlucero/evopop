@@ -8,8 +8,15 @@ module Evopop
     attr_accessor :dna, :fitness
 
     # Simple initialization of candidate object.
-    def initialize(dna = [])
+    def initialize(dna)
       @dna = dna
+    end
+
+    def compose_parent_dna(c0, c1)
+      # Compose the dna of the first child from the first chunk of the
+      # first candidate and the second chunk of the second candidate
+      # dna0_left = c0.dna.take(ordinal)
+      # dna1_right = c1.dna.drop(ordinal)
     end
   end
 end

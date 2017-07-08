@@ -14,15 +14,22 @@ module Evopop
       dna0_left = candidates[0].dna.take(ordinal)
       dna1_right = candidates[1].dna.drop(ordinal)
 
+
       # Compose the dna of the second child from the first chunk of the
       # first candidate and the second chunk of the second candidate
       dna1_left = candidates[1].dna.take(ordinal)
       dna0_right = candidates[0].dna.drop(ordinal)
 
+      min_range = candidates[0].dna.min_range
+      max_range = candidates[1].dna.max_range
+
+      dna_1 = Evopop::Dna.create(min_range, max_range, dna0_left + dna1_right)
+      dna_2 = Evopop::Dna.create(min_range, max_range, dna1_left + dna0_right)
+
       # Initialize and assign DNA to children.
       children = [
-        Evopop::Candidate.new(dna0_left + dna1_right),
-        Evopop::Candidate.new(dna1_left + dna0_right)
+        Evopop::Candidate.new(dna_1),
+        Evopop::Candidate.new(dna_2)
       ]
 
       children
@@ -99,15 +106,13 @@ module Evopop
     end
 
     def self.average(candidates, _params)
-      child = Evopop::Candidate.new
-      dna_length = candidates[0].dna.length
-
-      (0...dna_length).each do |j|
+      new_dna = Evopop::Dna.new(candidates[0].dna.min_range, candidates[0].dna.max_range, candidates[0].dna.length)
+      new_dna.dna = []
+      (0...candidates[0].dna.length).each do |j|
         # Initialize the dna of the child with the average of the parents' dna.
-        child.dna << (candidates[0].dna[j] + candidates[1].dna[j]) / 2.0
+        new_dna.dna << (candidates[0].dna[j] + candidates[1].dna[j]) / 2.0
       end
-
-      [child]
+      [Evopop::Candidate.new(new_dna)]
     end
   end
 end
