@@ -5,6 +5,8 @@ module Evopop
   class Dna
     attr_accessor :dna, :dna_len, :min_range, :max_range, :min_mutation, :max_mutation
     def initialize(min_range, max_range, min_mutation, max_mutation, dna_len)
+      # TODO: Extract these to a DnaProperties class or something so we don't
+      # have to couple parameter passsing so much.
       @min_range = min_range
       @max_range = max_range
       @min_mutation = min_mutation
