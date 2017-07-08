@@ -102,7 +102,7 @@ module Evopop
     end
 
     def mutated_candidates
-      @candidates.sample(mutation_num)
+      @candidates.sample(@mutation_num)
     end
   end
 end

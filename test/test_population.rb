@@ -78,7 +78,7 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     # Assert: Only the specified number of candidates are being mutated
     counter = 0
     old_candidates.zip(population.candidates).each do |old_candidate, new_candidate|
-      next if old_candidate.dna.to_s == new_candidate.dna.to_s
+      next if old_candidate.dna == new_candidate.dna
       assert_equal(true, (old_candidate.dna[0] - new_candidate.dna[0]).abs <= population.mutation_range_max)
       assert_equal(true, (old_candidate.dna[1] - new_candidate.dna[1]).abs <= population.mutation_range_max)
       counter += 1
