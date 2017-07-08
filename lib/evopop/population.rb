@@ -34,7 +34,13 @@ module Evopop
     # parameters have been set to the attributes.
     def create
       @candidates = Array.new(@population_size) do
-        dna = Evopop::Dna.new(@initial_range_min, @initial_range_max, @dna_len)
+        dna = Evopop::Dna.new(
+          @initial_range_min,
+          @initial_range_max,
+          @mutation_range_min,
+          @mutation_range_max,
+          @dna_len
+        )
         candidate = Evopop::Candidate.new(dna)
         candidate
       end

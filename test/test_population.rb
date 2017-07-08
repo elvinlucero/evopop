@@ -84,6 +84,7 @@ class Evopop::PopulationTest < Test::Unit::TestCase
       counter += 1
     end
 
+    # Make sure only the mutated amount gets mutated
     assert_equal(population.mutation_num, counter)
   end
 
@@ -91,7 +92,7 @@ class Evopop::PopulationTest < Test::Unit::TestCase
   def test_one_point_crossover
     # Arrange: Initialize the population
     population = initialize_population
-
+    initial_population_size = population.candidates.size
     # Act: Train and corssover the population a number of times
     5.times do
       population.train
@@ -104,11 +105,13 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     first_averagea_fitness = population.average_fitness[0]
     last_averge_fitness = population.average_fitness[population.average_fitness.length - 1]
     assert_equal(true, first_averagea_fitness < last_averge_fitness)
+    assert_equal(initial_population_size, population.candidates.size)
   end
 
   def test_two_point_crossover
     # Arrange: Initialize the population with parameters for the crossover function
     population = initialize_population
+    initial_population_size = population.candidates.size
     population.dna_len = 8
     population.crossover_params = { ordinals: '2,4' }
     population.crossover_function = Evopop::Crossover.method(:two_point)
@@ -126,6 +129,7 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     first_averagea_fitness = population.average_fitness[0]
     last_averge_fitness = population.average_fitness[population.average_fitness.length - 1]
     assert_equal(true, first_averagea_fitness < last_averge_fitness)
+    assert_equal(initial_population_size, population.candidates.size)
   end
 
   def test_n_point_crossover

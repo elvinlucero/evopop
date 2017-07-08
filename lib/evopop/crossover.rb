@@ -22,9 +22,11 @@ module Evopop
 
       min_range = candidates[0].dna.min_range
       max_range = candidates[1].dna.max_range
+      min_mutation = candidates[1].dna.min_mutation
+      max_mutation = candidates[1].dna.max_mutation
 
-      dna_1 = Evopop::Dna.create(min_range, max_range, dna0_left + dna1_right)
-      dna_2 = Evopop::Dna.create(min_range, max_range, dna1_left + dna0_right)
+      dna_1 = Evopop::Dna.create(min_range, max_range, min_mutation, max_mutation, dna0_left + dna1_right)
+      dna_2 = Evopop::Dna.create(min_range, max_range, min_mutation, max_mutation, dna1_left + dna0_right)
 
       # Initialize and assign DNA to children.
       children = [
@@ -106,7 +108,13 @@ module Evopop
     end
 
     def self.average(candidates, _params)
-      new_dna = Evopop::Dna.new(candidates[0].dna.min_range, candidates[0].dna.max_range, candidates[0].dna.length)
+      new_dna = Evopop::Dna.new(
+        candidates[0].dna.min_range,
+        candidates[0].dna.max_range,
+        candidates[0].dna.min_mutation,
+        candidates[0].dna.max_mutation,
+        candidates[0].dna.length
+      )
       new_dna.dna = []
       (0...candidates[0].dna.length).each do |j|
         # Initialize the dna of the child with the average of the parents' dna.
