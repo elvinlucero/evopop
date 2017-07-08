@@ -1,0 +1,39 @@
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/fixtures/**/*'
+    - 'tmp/**/*'
+  TargetRubyVersion: 2.4
+
+Layout/SpaceAroundOperators:
+  Exclude:
+    - 'evopop.gemspec'
+
+Metrics/AbcSize:
+  Max: 50
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 50
+
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'test/test_population.rb'
+
+Style/NumericPredicate:
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/evopop/crossover.rb'
+
+Style/PercentLiteralDelimiters:
+  Exclude:
+    - 'evopop.gemspec'
+
+Style/StringLiterals:
+  Exclude:
+    - 'evopop.gemspec'
