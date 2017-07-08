@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'evopop'
 
 # Initialize the population to be trained with good defaults.
@@ -28,4 +30,8 @@ end
 
 # Sort and print out candidate with highest fitness in the last generation.
 population.train
-puts "Finished #{population.max_generations} generations with the fittest candidate with a dna of #{population.candidates[0].dna} and a fitness of #{population.candidates[0].fitness}."
+puts <<~DEBUG
+  Finished #{population.max_generations} generations
+  with the fittest candidate with a dna of #{population.candidates[0].dna}
+  and a fitness of #{population.candidates[0].fitness}.
+DEBUG

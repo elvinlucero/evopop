@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Evopop
   # Represents the population that is being trained. Has various methods
   # relevant to training.
@@ -10,7 +12,10 @@ module Evopop
   #   population.crossover
   #   population.mutate
   class Population
-    attr_accessor :candidates, :population_size, :max_generations, :crossover_function, :crossover_params, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :fitness_function, :dna_len, :average_fitness
+    attr_accessor :candidates, :population_size, :max_generations,
+                  :crossover_function, :crossover_params, :initial_range_min,
+                  :initial_range_max, :mutation_range_min, :mutation_range_max,
+                  :mutation_num, :fitness_function, :dna_len, :average_fitness
 
     # Initializes the attributes with default values. This is not guaranteed
     # to reach maxima.
@@ -92,7 +97,7 @@ module Evopop
 
       mutated.each do |c|
         (0...@dna_len).each do |i|
-          c.dna[i] = c.dna[i] + Random.rand(@mutation_range_min...@mutation_range_max)
+          c.dna[i] += Random.rand(@mutation_range_min...@mutation_range_max)
         end
       end
     end

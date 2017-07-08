@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'evopop/population'
 require 'evopop/candidate'
 require 'evopop/crossover'
@@ -15,7 +17,10 @@ module Evopop
 
   # Defines the configuration to be available to all of Evopop
   class PopulationConfig
-    attr_accessor :average_fitness, :population_size, :max_generations, :initial_range_min, :initial_range_max, :mutation_range_min, :mutation_range_max, :mutation_num, :dna_len, :crossover_params, :crossover_function, :fitness_function
+    attr_accessor :average_fitness, :population_size, :max_generations,
+                  :initial_range_min, :initial_range_max, :mutation_range_min,
+                  :mutation_range_max, :mutation_num, :dna_len,
+                  :crossover_params, :crossover_function, :fitness_function
 
     def initialize
       @average_fitness = []

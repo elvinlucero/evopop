@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test/unit'
 require 'evopop'
 
@@ -57,7 +59,7 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     population.candidates.length.times do |count|
       assert_equal(population.candidates[count].fitness.nil?, false)
 
-      if count > 0
+      if count.positive?
         assert_equal(true, population.candidates[count].fitness <= population.candidates[count - 1].fitness)
       end
     end
@@ -99,7 +101,9 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given
     # no mutation.
-    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length - 1])
+    first_averagea_fitness = population.average_fitness[0]
+    last_averge_fitness = population.average_fitness[population.average_fitness.length - 1]
+    assert_equal(true, first_averagea_fitness < last_averge_fitness)
   end
 
   def test_two_point_crossover
@@ -119,7 +123,9 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given
     # no mutation.
-    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length - 1])
+    first_averagea_fitness = population.average_fitness[0]
+    last_averge_fitness = population.average_fitness[population.average_fitness.length - 1]
+    assert_equal(true, first_averagea_fitness < last_averge_fitness)
   end
 
   def test_n_point_crossover
@@ -146,7 +152,9 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given
     # no mutation.
-    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length - 1])
+    first_averagea_fitness = population.average_fitness[0]
+    last_averge_fitness = population.average_fitness[population.average_fitness.length - 1]
+    assert_equal(true, first_averagea_fitness < last_averge_fitness)
   end
 
   def test_average_crossover
@@ -163,6 +171,8 @@ class Evopop::PopulationTest < Test::Unit::TestCase
     # Assert: The initial average fitness is less than what occurs after 100 generations.
     # This is to ensure that over generations the average fitness does indeed go up, given
     # no mutation.
-    assert_equal(true, population.average_fitness[0] < population.average_fitness[population.average_fitness.length - 1])
+    first_averagea_fitness = population.average_fitness[0]
+    last_averge_fitness = population.average_fitness[population.average_fitness.length - 1]
+    assert_equal(true, first_averagea_fitness < last_averge_fitness)
   end
 end

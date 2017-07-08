@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Evopop
   # Represents a collection of well known crossover functions.
   #
@@ -39,8 +41,14 @@ module Evopop
       cdna1 = candidates[1].dna
 
       children = [
-        Evopop::Candidate.new(cdna0[0..ordinals[0]] + cdna1[(ordinals[0] + 1)..ordinals[1]] + cdna0[(ordinals[1] + 1)..cdna0.length - 1]),
-        Evopop::Candidate.new(cdna1[0..ordinals[0]] + cdna0[(ordinals[0] + 1)..ordinals[1]] + cdna1[(ordinals[1] + 1)..cdna1.length - 1])
+        Evopop::Candidate.new(
+          cdna0[0..ordinals[0]] +
+          cdna1[(ordinals[0] + 1)..ordinals[1]] + cdna0[(ordinals[1] + 1)..cdna0.length - 1]
+        ),
+        Evopop::Candidate.new(
+          cdna1[0..ordinals[0]] +
+          cdna0[(ordinals[0] + 1)..ordinals[1]] + cdna1[(ordinals[1] + 1)..cdna1.length - 1]
+        )
       ]
 
       children
