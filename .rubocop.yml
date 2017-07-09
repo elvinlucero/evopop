@@ -21,6 +21,10 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Max: 50
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 Style/ClassAndModuleChildren:
   Exclude:
     - 'test/test_population.rb'

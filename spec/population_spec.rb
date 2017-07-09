@@ -19,7 +19,7 @@ describe Evopop::Population do
 
     it 'has a population that conforms to DNA settings' do
       @population.candidates.each do |c|
-        expect(c.dna.length).to eq(@population.dna_len)
+        expect(c.dna.length).to be == @population.dna_len
         expect(c.dna[0]).to be > @population.initial_range_min
         expect(c.dna[0]).to be < @population.initial_range_max
         expect(c.dna[1]).to be > @population.initial_range_min

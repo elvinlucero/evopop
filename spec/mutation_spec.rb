@@ -20,7 +20,7 @@ describe Evopop::Population do
         counter += 1
       end
 
-      expect(@population.mutation_num).to eq(counter)
+      expect(@population.mutation_num).to be == counter
     end
   end
 end
