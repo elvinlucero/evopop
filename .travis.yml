@@ -7,4 +7,4 @@ rvm:
   - 2.4
   - jruby
 
-script: rspec spec
+script: bundle exec rspec spec
