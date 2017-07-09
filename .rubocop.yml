@@ -25,6 +25,9 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
+Metrics/ParameterLists:
+  Max: 7
+
 Style/ClassAndModuleChildren:
   Exclude:
     - 'test/test_population.rb'

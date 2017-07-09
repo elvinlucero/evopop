@@ -78,13 +78,8 @@ module Evopop
 
       ordinals.each do |i|
         n_ordinal = old_ordinal..i
-        if synchronous
-          cdna_a += pdna_a[n_ordinal]
-          cdna_b += pdna_b[n_ordinal]
-        else
-          cdna_a += pdna_b[n_ordinal]
-          cdna_b += pdna_a[n_ordinal]
-        end
+
+        cdna_a, cdna_b = build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, n_ordinal, synchronous)
 
         synchronous = !synchronous
         next_ordinal = i + 1
@@ -92,19 +87,22 @@ module Evopop
         next if ordinals.last != next_ordinal - 1
 
         ordinal_range = next_ordinal..(dna_length - 1)
-        if synchronous
-          cdna_a += pdna_a[ordinal_range]
-          cdna_b += pdna_b[ordinal_range]
-        else
-          cdna_a += pdna_b[ordinal_range]
-          cdna_b += pdna_a[ordinal_range]
-        end
+        cdna_a, cdna_b = build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, ordinal_range, synchronous)
       end
 
       [
         Evopop::Candidate.new(cdna_a),
         Evopop::Candidate.new(cdna_b)
       ]
+    end
+
+    def self.build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, ordinal_range, synchronous)
+      pdnas = [pdna_a, pdna_b]
+      pdnas.reverse! unless synchronous
+      cdna_a += pdnas[0][ordinal_range]
+      cdna_b += pdnas[1][ordinal_range]
+
+      [cdna_a, cdna_b]
     end
 
     def self.average(candidates, _params)
