@@ -50,17 +50,16 @@ module Evopop
       cdna_b = candidates[1].dna
 
       children = [
-        Evopop::Candidate.new(
-          cdna_a[0..ordinals[0]] +
-          cdna_b[(ordinals[0] + 1)..ordinals[1]] + cdna_a[(ordinals[1] + 1)..cdna_a.length - 1]
-        ),
-        Evopop::Candidate.new(
-          cdna_b[0..ordinals[0]] +
-          cdna_a[(ordinals[0] + 1)..ordinals[1]] + cdna_b[(ordinals[1] + 1)..cdna_b.length - 1]
-        )
+        Evopop::Candidate.new(combine_on_ordinal(cdna_a, cdna_b, ordinals)),
+        Evopop::Candidate.new(combine_on_ordinal(cdna_b, cdna_a, ordinals))
       ]
 
       children
+    end
+
+    def self.combine_on_ordinal(dna_a, dna_b, ordinals)
+      # TODO: Would this be better in dna.rb?
+      dna_a[0..ordinals[0]] + dna_b[(ordinals[0] + 1)..ordinals[1]] + dna_a[(ordinals[1] + 1)..dna_a.length - 1]
     end
 
     # Perform n_point crossover for a pair of candidates. Will output two children from the n_point crossover.
