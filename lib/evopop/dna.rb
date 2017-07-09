@@ -4,6 +4,7 @@ module Evopop
   # Represents a Dna structure, like an array of floating point values
   class Dna
     attr_accessor :dna, :dna_len, :min_range, :max_range, :min_mutation, :max_mutation
+
     def initialize(min_range, max_range, min_mutation, max_mutation, dna_len)
       # TODO: Extract these to a DnaProperties class or something so we don't
       # have to couple parameter passsing so much.
@@ -63,6 +64,10 @@ module Evopop
 
     def ==(other)
       @dna == other.dna
+    end
+
+    def to_s
+      @dna.to_s
     end
   end
 end
