@@ -1,3 +1,3 @@
-source 'https://rubygems.org'
+source 'https://rubygems.org'.freeze
 
-gem 'rspec', '~>3.6.0'
+gem 'rspec', '~> 3.6.0'
