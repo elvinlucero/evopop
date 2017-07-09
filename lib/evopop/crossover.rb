@@ -29,12 +29,10 @@ module Evopop
       dna_b = Evopop::Dna.create(min_range, max_range, min_mutation, max_mutation, dna_b_left + dna_a_right)
 
       # Initialize and assign DNA to children.
-      children = [
+      [
         Evopop::Candidate.new(dna_a),
         Evopop::Candidate.new(dna_b)
       ]
-
-      children
     end
 
     # Perform two point crossover over a pair of candidates. Will output two
@@ -49,12 +47,10 @@ module Evopop
       cdna_a = candidates[0].dna
       cdna_b = candidates[1].dna
 
-      children = [
+      [
         Evopop::Candidate.new(combine_on_ordinal(cdna_a, cdna_b, ordinals)),
         Evopop::Candidate.new(combine_on_ordinal(cdna_b, cdna_a, ordinals))
       ]
-
-      children
     end
 
     def self.combine_on_ordinal(dna_a, dna_b, ordinals)
@@ -81,29 +77,34 @@ module Evopop
       synchronous = ordinals[0] == 0 ? false : true
 
       ordinals.each do |i|
+        n_ordinal = old_ordinal..i
         if synchronous
-          cdna_a += pdna_a[old_ordinal..i]
-          cdna_b += pdna_b[old_ordinal..i]
+          cdna_a += pdna_a[n_ordinal]
+          cdna_b += pdna_b[n_ordinal]
         else
-          cdna_a += pdna_b[old_ordinal..i]
-          cdna_b += pdna_a[old_ordinal..i]
+          cdna_a += pdna_b[n_ordinal]
+          cdna_b += pdna_a[n_ordinal]
         end
 
         synchronous = !synchronous
-        old_ordinal = i + 1
+        next_ordinal = i + 1
 
-        next if ordinals.last != old_ordinal - 1
+        next if ordinals.last != next_ordinal - 1
 
+        ordinal_range = next_ordinal..(dna_length - 1)
         if synchronous
-          cdna_a += pdna_a[old_ordinal..dna_length - 1]
-          cdna_b += pdna_b[old_ordinal..dna_length - 1]
+          cdna_a += pdna_a[ordinal_range]
+          cdna_b += pdna_b[ordinal_range]
         else
-          cdna_a += pdna_b[old_ordinal..dna_length - 1]
-          cdna_b += pdna_a[old_ordinal..dna_length - 1]
+          cdna_a += pdna_b[ordinal_range]
+          cdna_b += pdna_a[ordinal_range]
         end
       end
 
-      [Evopop::Candidate.new(cdna_a), Evopop::Candidate.new(cdna_b)]
+      [
+        Evopop::Candidate.new(cdna_a),
+        Evopop::Candidate.new(cdna_b)
+      ]
     end
 
     def self.average(candidates, _params)
@@ -119,6 +120,7 @@ module Evopop
         # Initialize the dna of the child with the average of the parents' dna.
         new_dna.dna << (candidates[0].dna[j] + candidates[1].dna[j]) / 2.0
       end
+
       [Evopop::Candidate.new(new_dna)]
     end
   end
