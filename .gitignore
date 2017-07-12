@@ -1,3 +1,6 @@
 *.gem
 *.swp
 *.todo
+coverage
+
+.DS_Store
