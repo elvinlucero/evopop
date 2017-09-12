@@ -8,25 +8,18 @@ module Evopop
     # http://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)#One-point_crossover
     def self.one_point(candidates, params)
       ordinal = params[:ordinal]
+      arr_a, arr_b = CrossoverArray.one_point_crossover(candidates[0].dna, candidates[1].dna, ordinal)
 
-      # Compose the dna of the first child from the first chunk of the
-      # first candidate and the second chunk of the second candidate
-      dna_a_left = candidates[0].dna.take(ordinal)
-      dna_b_right = candidates[1].dna.drop(ordinal)
-
-      # Compose the dna of the second child from the first chunk of the
-      # first candidate and the second chunk of the second candidate
-      dna_b_left = candidates[1].dna.take(ordinal)
-      dna_a_right = candidates[0].dna.drop(ordinal)
-
+      # TODO: Move this to its own class, DnaRange
       min_range = candidates[0].dna.min_range
       max_range = candidates[1].dna.max_range
 
+      # TODO: Move this to its own class, DnaMutationRange
       min_mutation = candidates[1].dna.min_mutation
       max_mutation = candidates[1].dna.max_mutation
 
-      dna_a = Evopop::Dna.create(min_range, max_range, min_mutation, max_mutation, dna_a_left + dna_b_right)
-      dna_b = Evopop::Dna.create(min_range, max_range, min_mutation, max_mutation, dna_b_left + dna_a_right)
+      dna_a = Evopop::Dna.create(min_range, max_range, min_mutation, max_mutation, arr_a)
+      dna_b = Evopop::Dna.create(min_range, max_range, min_mutation, max_mutation, arr_b)
 
       # Initialize and assign DNA to children.
       [
@@ -43,18 +36,15 @@ module Evopop
       # Make sure to sort.
       ordinals = params[:ordinals].split(',').sort.collect(&:to_i)
 
-      # Initialize and assign the DNA of the children.
-      cdna_a = candidates[0].dna
-      cdna_b = candidates[1].dna
+      cdna_a, cdna_b = CrossoverArray.two_point_crossover(candidates[0].dna, candidates[1].dna, ordinals)
 
       [
-        Evopop::Candidate.new(combine_on_ordinal(cdna_a, cdna_b, ordinals)),
-        Evopop::Candidate.new(combine_on_ordinal(cdna_b, cdna_a, ordinals))
+        Evopop::Candidate.new(cdna_a),
+        Evopop::Candidate.new(cdna_b)
       ]
     end
 
     def self.combine_on_ordinal(dna_a, dna_b, ordinals)
-      # TODO: Would this be better in dna.rb?
       dna_a[0..ordinals[0]] + dna_b[(ordinals[0] + 1)..ordinals[1]] + dna_a[(ordinals[1] + 1)..dna_a.length - 1]
     end
 
@@ -79,7 +69,7 @@ module Evopop
       ordinals.each do |i|
         n_ordinal = old_ordinal..i
 
-        cdna_a, cdna_b = build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, n_ordinal, synchronous)
+        cdna_a, cdna_b = CrossoverArray.build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, n_ordinal, synchronous)
 
         synchronous = !synchronous
         next_ordinal = i + 1
@@ -87,22 +77,13 @@ module Evopop
         next if ordinals.last != next_ordinal - 1
 
         ordinal_range = next_ordinal..(dna_length - 1)
-        cdna_a, cdna_b = build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, ordinal_range, synchronous)
+        cdna_a, cdna_b = CrossoverArray.build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, ordinal_range, synchronous)
       end
 
       [
         Evopop::Candidate.new(cdna_a),
         Evopop::Candidate.new(cdna_b)
       ]
-    end
-
-    def self.build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, ordinal_range, synchronous)
-      pdnas = [pdna_a, pdna_b]
-      pdnas.reverse! unless synchronous
-      cdna_a += pdnas[0][ordinal_range]
-      cdna_b += pdnas[1][ordinal_range]
-
-      [cdna_a, cdna_b]
     end
 
     def self.average(candidates, _params)

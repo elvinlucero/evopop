@@ -13,18 +13,18 @@ over a fitness function.
 require 'evopop'
 
 # Initialize the population to be trained with good defaults.
-population = Evopop::Population.new
-population.population_size = 1000
-population.dna_len = 2
-population.max_generations = 1000
-population.initial_range_min = -10_000.0
-population.initial_range_max = 10_000.0
+population                    = Evopop::Population.new
+population.population_size    = 1000
+population.dna_len            = 2
+population.max_generations    = 1000
+population.initial_range_min  = -10_000.0
+population.initial_range_max  = 10_000.0
 population.mutation_range_min = -10.0
 population.mutation_range_max = 10.0
-population.mutation_num = 10
-population.crossover_params = { ordinal: (DNA_LEN / 2) }.freeze
+population.mutation_num       = 10
+population.crossover_params   = { ordinal: (DNA_LEN / 2) }.freeze
 population.crossover_function = Evopop::Crossover.method(:one_point)
-population.fitness_function = proc do |dna|
+population.fitness_function   = proc do |dna|
   Math.sin(dna[0]) + Math.cos(dna[1])
 end
 

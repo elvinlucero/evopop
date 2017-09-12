@@ -3,6 +3,7 @@
 require 'evopop/population'
 require 'evopop/candidate'
 require 'evopop/crossover'
+require 'evopop/crossover_array'
 require 'evopop/dna'
 
 # Toplevel class for evopop project
@@ -25,7 +26,7 @@ module Evopop
 
     def initialize
       @average_fitness = []
-      @population_size = 100
+      @population_size = 500
       @max_generations = 100
       @initial_range_min = -100
       @initial_range_max = 100
