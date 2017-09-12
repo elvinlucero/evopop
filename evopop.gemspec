@@ -2,8 +2,8 @@
 
 Gem::Specification.new do |s|
   s.name = 'evopop'
-  s.version = '0.1.0'
-  s.date = '2017-07-08'
+  s.version = '0.1.1'
+  s.date = '2017-09-11'
   s.summary = "A simple library for implementing simple genetic algorithms."
   s.description = "A simple library for implementing simple genetic algorithms."
   s.authors = ["Elvin Lucero"]
