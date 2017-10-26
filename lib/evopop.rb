@@ -36,7 +36,7 @@ module Evopop
       @mutation_num       = (0.10 * @population_size).to_i
       @dna_len            = 1
       @crossover_params   = { ordinal: (@dna_len / 2) }
-
+      @fitness_preference = :maximum
       @crossover_function = Evopop::Crossover.method(:one_point)
       @fitness_function   = proc do |dna|
         Math.sin(dna[0])

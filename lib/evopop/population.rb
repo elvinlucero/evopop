@@ -15,7 +15,8 @@ module Evopop
     attr_accessor :candidates, :population_size, :max_generations,
                   :crossover_function, :crossover_params, :initial_range_min,
                   :initial_range_max, :mutation_range_min, :mutation_range_max,
-                  :mutation_num, :fitness_function, :dna_len, :average_fitness
+                  :mutation_num, :fitness_function, :dna_len, :average_fitness,
+                  :fitness_preference
 
     # Initializes the attributes with default values. This is not guaranteed
     # to reach maxima.
@@ -60,7 +61,7 @@ module Evopop
       @average_fitness << average_fitness
 
       @candidates = @candidates.sort_by(&:fitness)
-      @candidates = @candidates.reverse
+      @candidates = @candidates.reverse if fitness_preference != :minimum
     end
 
     # Performs simple mechanism of crossover - in this case picks two
@@ -98,7 +99,7 @@ module Evopop
     private
 
     def top_candidates
-      @candidates.take((@population_size * 0.75).to_i)
+      @candidates.take((@population_size * 0.80).to_i)
     end
 
     def mutated_candidates
