@@ -44,10 +44,6 @@ module Evopop
       ]
     end
 
-    def self.combine_on_ordinal(dna_a, dna_b, ordinals)
-      dna_a[0..ordinals[0]] + dna_b[(ordinals[0] + 1)..ordinals[1]] + dna_a[(ordinals[1] + 1)..dna_a.length - 1]
-    end
-
     # Perform n_point crossover for a pair of candidates. Will output two children from the n_point crossover.
     #
     # Example:
