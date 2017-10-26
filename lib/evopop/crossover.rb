@@ -73,7 +73,11 @@ module Evopop
         next if ordinals.last != next_ordinal - 1
 
         ordinal_range = next_ordinal..(dna_length - 1)
-        cdna_a, cdna_b = CrossoverArray.build_dna_by_synchronous(cdna_a, cdna_b, pdna_a, pdna_b, ordinal_range, synchronous)
+        cdna_a, cdna_b = CrossoverArray.build_dna_by_synchronous(
+          cdna_a, cdna_b,
+          pdna_a, pdna_b,
+          ordinal_range, synchronous
+        )
       end
 
       [

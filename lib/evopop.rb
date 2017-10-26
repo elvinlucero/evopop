@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 require 'evopop/population'
 require 'evopop/candidate'
 require 'evopop/crossover'
