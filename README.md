@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/elvinlucero/evopop.svg?branch=master)](https://travis-ci.org/elvinlucero/evopop)
-[![Code Climate](https://codeclimate.com/github/elvinlucero/evopop/badges/gpa.svg)](https://codeclimate.com/github/elvinlucero/evopop)
+[![Maintainability](https://api.codeclimate.com/v1/badges/47999dd3918dda079130/maintainability)](https://codeclimate.com/github/elvinlucero/evopop/maintainability)
 
 Evopop
 ------------------------
